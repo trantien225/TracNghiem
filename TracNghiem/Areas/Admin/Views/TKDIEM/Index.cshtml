@@ -1,0 +1,52 @@
+﻿@model List<TracNghiem.Models.Class3>
+
+    @{
+        ViewBag.Title = "THONGKE";
+        Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+    }
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Thống kê điểm môn học</title>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+    <body>
+        <div style="width: 600px; margin: 0 auto;">
+            <h2 style="text-align: center;">Thống kê điểm môn học</h2>
+            <canvas id="myChart" width="200" height="200"></canvas>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                var subjects = @Html.Raw(Json.Encode(Model.Select(x => x.TENHOCPHAN)));
+                var scores = @Html.Raw(Json.Encode(Model.Select(x => x.TONGDIEM)));
+
+                // Vẽ biểu đồ cột bằng Chart.js
+                var ctx = document.getElementById('myChart').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: subjects,
+                        datasets: [{
+                            label: 'Điểm trung trình',
+                            data: scores,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+    </html>

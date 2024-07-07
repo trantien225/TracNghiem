@@ -1,0 +1,73 @@
+﻿@model TracNghiem.Models.Class4
+
+@{
+    ViewBag.Title = "Thêm Lịch Thi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@using (Html.BeginForm("GenerateSchedules", "TKB", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+    <div class="container">
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <!-- Chọn Học phần -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LICHTHI.MAHOCPHAN, htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.LICHTHI.MAHOCPHAN, new SelectList(Model.HOCPHANs, "MAHOCPHAN", "TENHOCPHAN"), "Chọn học phần", new { @class = "form-control", id = "MAHOCPHAN" })
+                    @Html.ValidationMessageFor(model => model.LICHTHI.MAHOCPHAN, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- Thời lượng thi -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LICHTHI.THOILUONGTHI, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.LICHTHI.THOILUONGTHI, new { @class = "form-control", id = "THOILUONGTHI" })
+                    @Html.ValidationMessageFor(model => model.LICHTHI.THOILUONGTHI, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <!-- Chọn ngày bắt đầu -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Ngày bắt đầu", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBox("StartDate", null, new { @class = "form-control", type = "date" })
+                </div>
+            </div>
+        </div>
+
+        <!-- Chọn ngày kết thúc -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.Label("Ngày kết thúc", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBox("EndDate", null, new { @class = "form-control", type = "date" })
+                </div>
+            </div>
+        </div>
+        <!-- Ghi chú -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.LICHTHI.GHICHU, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.LICHTHI.GHICHU, new { @class = "form-control", id = "GHICHU" })
+                    @Html.ValidationMessageFor(model => model.LICHTHI.GHICHU, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary" id="btnSubmit">Tạo lịch thi</button>
+        </div>
+    </div>
+}

@@ -1,0 +1,45 @@
+﻿@model List<TracNghiem.Models.BODETHI>
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/Account/Index" class="nav-link">Admin</a>
+        </li>
+    </ul>
+}
+
+<h2 style="text-align:center">TẠO ĐỀ</h2>
+
+<form id="uploadForm" enctype="multipart/form-data" method="post" action="@Url.Action("Add", "Topic", new { area = "Admin" })">
+    <div class="form-group">
+        <label for="subjectName" class="form-label">Chọn bộ đề:</label>
+        <select id="subjectName" name="subjectName" class="form-control" required>
+            <option value="" disabled selected>Chọn bộ đề</option>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <option value="@item.MABODETHI">@item.MABODETHI</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="excelFile">Chọn file Excel:</label>
+        <input type="file" id="excelFile" name="excelFile" class="form-control" accept=".xlsx,.xls" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

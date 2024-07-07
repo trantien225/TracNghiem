@@ -1,0 +1,57 @@
+﻿@model List<TracNghiem.Models.SINHVIEN>
+@{
+    ViewBag.Title = "Danh Sách Sinh Viên";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/Account/Index" class="nav-link">Admin</a>
+        </li>
+    </ul>
+}
+
+<h2 style="text-align:center">DANH SÁCH SINH VIÊN</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>MSSV</th>
+            <th>Họ Tên</th>
+            <th>Giới Tính</th>
+            <th>Lớp</th>
+            <th>Ngày Sinh</th>
+            <th>Ảnh</th>
+            <th>SĐT</th>
+            <th>CCCD</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sv in Model)
+        {
+            <tr>
+                <td>@sv.MSSV</td>
+                <td>@sv.HOTEN</td>
+                <td>@sv.GIOITINH</td>
+                <td>@sv.NGAYSINH</td>
+                @*<td>
+                        @if (!string.IsNullOrEmpty(sv.IMG))
+                        {
+                            <img src="@Url.Content("~/App_Data/Uploads/" + sv.IMG)" alt="Ảnh Sinh Viên" style="width: 50px; height: 50px;" />
+                        }
+                        else
+                        {
+                            <span>Không có ảnh</span>
+                        }
+                    </td>*@
+                <td>@sv.SDT</td>
+            </tr>
+        }
+    </tbody>
+</table>

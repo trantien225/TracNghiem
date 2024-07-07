@@ -1,0 +1,132 @@
+﻿.login {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+}
+
+.form-w3-agile {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Width increased for larger form */
+    width: 100%;
+}
+
+.form-sub-w3 {
+    position: relative;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+    .form-sub-w3 input {
+        width: calc(100% - 40px);
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 18px;
+        outline: none;
+    }
+
+.icon-w3 {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.submit-w3l input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .submit-w3l input[type="submit"]:hover {
+        background-color: #218838;
+    }
+.input-with-icon {
+    position: relative;
+    display: flex; 
+    align-items: center;
+}
+
+.input-with-icon input {
+    flex: 1;
+}
+
+.login {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f7f7f7;
+}
+
+.form-w3-agile {
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 400px; /* Width increased for larger form */
+    width: 100%;
+}
+
+.form-sub-w3 {
+    position: relative;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+    .form-sub-w3 input {
+        width: calc(100% - 40px);
+        padding: 15px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 18px;
+        outline: none;
+    }
+
+.icon-w3 {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.submit-w3l input[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+    .submit-w3l input[type="submit"]:hover {
+        background-color: #218838;
+    }
+.input-with-icon {
+    position: relative;
+    display: flex; 
+    align-items: center;
+}
+
+.input-with-icon input {
+    flex: 1;
+}
+

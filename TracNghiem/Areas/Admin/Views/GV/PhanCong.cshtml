@@ -1,0 +1,59 @@
+﻿@model List<TracNghiem.Models.tkbthi>
+
+@{
+    ViewBag.Title = "Danh sách lịch thi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<!-- Phần nội dung của trang -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách lịch thi</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <table id="tblLichThi" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Tên học phần</th>
+                                    <th>Tên Lớp</th>
+                                    <th>Tên Giảng Viên 1</th>
+                                    <th>Tên Giảng Viên 2</th>
+                                    <th>Ngày Thi</th>
+                                    <th>Phòng Thi</th>
+                                    <th>Thời Gian Thi</th>
+                                    <th>Thời Lượng Thi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.TenHocPhan</td>
+                                        <td>@item.TenLopHocPhan</td>
+                                        <td>@item.TenGV1</td>
+                                        <td>@item.TenGV2</td>
+                                        <td>@(item.NgayThi?.ToString("dd/MM/yyyy"))</td>
+                                        <td>@item.PHONGTHI</td>
+                                        <td>@item.THOIGIANTHI</td>
+                                        <td>@item.ThoiLuongThi</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /.container-fluid -->
+</section>
+<!-- /.content -->

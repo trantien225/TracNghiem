@@ -1,0 +1,150 @@
+﻿<!DOCTYPE html>
+@{
+    Layout = null;
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="~/css/login.css" rel="stylesheet" />
+    <link rel="icon" href="~/img/Avata/hufi.jpg" type="image/x-icon" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 92vh;
+            background: url('../../img/Avata/truong-dh-cong-nghiep-thuc-pham-tphcm-diem-chuan-hoc-phi-nganh-dao-tao-thong-tin-tuyen-sinh.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .login {
+            background: rgba(255, 255, 255, 0.7); /* Adjusted transparency */
+            padding: 2em;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+            .login h3 {
+                font-size: 2em;
+                margin-bottom: 0.5em;
+                color: black;
+                font-family: 'Verdana', sans-serif;
+                padding-top: 100px;
+            }
+
+        .form-w3-agile {
+            display: flex;
+            flex-direction: column;
+        }
+
+            .form-w3-agile h2 {
+                margin-bottom: 1.5em;
+                color: #333;
+                text-align: center;
+                font-family: 'Verdana', sans-serif;
+            }
+
+        .input-with-icon {
+            position: relative;
+            margin-bottom: 1.5em;
+        }
+
+            .input-with-icon input {
+                width: 100%;
+                padding: 0.75em 2.5em 0.75em 1em;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                font-size: 1em;
+            }
+
+        .icon-w3 {
+            position: absolute;
+            right: 1em;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .submit-w3l input {
+            width: 100%;
+            padding: 0.75em;
+            border: none;
+            border-radius: 5px;
+            background: #007bff;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+            .submit-w3l input:hover {
+                background: #0056b3;
+            }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="login">
+        <h3>Thi trực tuyến HUIT</h3>
+        <div class="form-w3-agile">
+            <h2>Đăng nhập</h2>
+            <form action="#" method="post">
+                @Html.AntiForgeryToken()
+                <div class="form-sub-w3">
+                    <div class="input-with-icon">
+                        <input type="text" name="Username" placeholder="Mã sinh viên" required="">
+                        <div class="icon-w3">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-sub-w3">
+                    <div class="input-with-icon">
+                        <input type="password" id="password" name="Password" placeholder="Mật khẩu" required="">
+                        <div class="icon-w3" onclick="togglePassword()">
+                            <i id="eye-icon" class="fa fa-eye" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="submit-w3l">
+                    <input type="submit" value="Đăng nhập">
+                </div>
+                @if (!string.IsNullOrEmpty(ViewBag.Error))
+                {
+                    <p class="error-message">@ViewBag.Error</p>
+                }
+            </form>
+        </div>
+    </div>
+    <script>
+        function togglePassword() {
+            var passwordField = document.getElementById("password");
+            var eyeIcon = document.getElementById("eye-icon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                eyeIcon.className = "fa fa-eye-slash";
+            } else {
+                passwordField.type = "password";
+                eyeIcon.className = "fa fa-eye";
+            }
+        }
+    </script>
+</body>
+</html>
+    

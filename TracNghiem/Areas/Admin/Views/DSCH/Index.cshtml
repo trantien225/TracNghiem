@@ -1,0 +1,90 @@
+﻿@model List<TracNghiem.Models.CAUHOI>
+@{
+    ViewBag.Title = "Danh Sách Câu Hỏi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@section naviheader {
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/DSCH/Index" class="nav-link">Ngân Hàng Câu Hỏi</a>
+        </li>
+    </ul>
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="text-uppercase">Ngân hàng câu hỏi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="~/Admin/HomeAdmin">Home</a></li>
+                    <li class="breadcrumb-item active">Ngân Hàng Câu Hỏi</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Dropdown for selecting Học Phần -->
+<div class="form-group">
+    <label for="hocPhanId">Chọn Học Phần:</label>
+    <select id="hocPhanId" class="form-control" onchange="filterByHocPhan()">
+        <option value="">-- Tất cả --</option>
+        @if (ViewBag.HocPhans != null)
+        {
+            foreach (var hp in ViewBag.HocPhans)
+            {
+                <option value="@hp.MAHOCPHAN">@hp.TENHOCPHAN</option>
+            }
+        }
+    </select>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Mã Câu Hỏi</th>
+            <th>Câu Hỏi</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>Đáp Án Đúng</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var ch in Model)
+            {
+                <tr>
+                    <td>@ch.MACAUHOI</td>
+                    <td>@ch.TENCAUHOI</td>
+                    <td>@ch.DAPAN_A</td>
+                    <td>@ch.DAPAN_B</td>
+                    <td>@ch.DAPAN_C</td>
+                    <td>@ch.DAPAN_D</td>
+                    <td>@ch.DAPANDUNG</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section scripts {
+    <script>
+        function filterByHocPhan() {
+            var hocPhanId = document.getElementById("hocPhanId").value;
+            window.location.href = '@Url.Action("Index", "DSCH", new { area = "Admin" })' + '?MAHOCPHAN=' + hocPhanId;
+        }
+    </script>
+}

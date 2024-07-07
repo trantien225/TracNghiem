@@ -1,0 +1,235 @@
+﻿<!-- Sidebar -->
+<div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        @*<div class="image">
+                <img src="" class="img-circle elevation-2" alt="User Image">
+            </div>*@
+        <div class="info">
+            @Html.ActionLink("Admin", "HomeAdmin", "Admin", new { area = "" }, new { @class = "nav-link" })
+
+        </div>
+    </div>
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            @if (Session["CurrentUser"] != null && ((TracNghiem.Models.TAIKHOAN)Session["CurrentUser"]).LOAITK == "admin")
+            {
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <p>
+                            QUẢN LÝ DS_SV_GV
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/DSCH/hocphan" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Học phần</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/DSSV/Add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm SV</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/dssv/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh sách sinh viên</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/GV/Add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm GV</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/GV/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Danh sách giảng viên</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-users "></i>
+                        <p>
+                            Quản lý tài khoản
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/Account/Admin" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tài khoản Admin_GV</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Account/AddGV" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm Tài Khoản GV</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Account/Index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tài khoản SV</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/Account/Add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm Tài Khoản SV</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>
+                            Quản lý lịch thi
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/GV/phancong" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lịch thi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/tkb/add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Lên lịch thi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/tkb/hocphan" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Học phần</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/tkb/AllowExam" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Trạng thái đề</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-book"></i>
+                        <p>
+                            Câu hỏi và bộ đề
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="/admin/topic/index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p> List bộ đề</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/topic/ADDBODE" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tạo bộ đề</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/topic/add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm câu hỏi Excel</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/topic/CreateBoDe" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm câu hỏi random</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/DSCH/index" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Ngân hàng câu hỏi</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/admin/DSCH/add" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Thêm ngân hàng</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/TKDIEM/index" class="nav-link">
+                        <i class="nav-icon fas fa-calendar"></i>
+                        <p>
+                            Thống kê
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/admin/homeadmin/backup" class="nav-link">
+                        <i class="nav-icon fas fa-window-restore"></i>
+                        <p>
+                            Sao lưu - Phục hồi
+                        </p>
+                    </a>
+                </li>
+            }
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas  fa-user-secret "></i>
+                    <p>
+                        Giám thị
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="/admin/Account/GiangVienIndex" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Tài khoản giảng viên</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/Account/index" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Lớp dự thi</p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/admin/GV/phancong" class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Danh sách coi thi</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li class="nav-item" style="background-color: #a60101">
+                <a href="@Url.Action("Logout", "Login", new { area = "" })" class="nav-link">
+                    <i class="nav-icon fas fa-sign-out-alt"></i>
+                    <p style="font-size:20px">
+                        Đăng xuất
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <!-- Footer -->
+    <!--<div style="padding-top:360px;text-align:center">
+        <a href="@Url.Action("Logout", "Login", new { area = "" })" class="btn btn-danger">Đăng xuất</a>
+    </div>-->
+</div>

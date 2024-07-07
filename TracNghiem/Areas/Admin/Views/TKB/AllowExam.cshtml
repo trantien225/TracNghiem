@@ -1,0 +1,88 @@
+﻿@model List<TracNghiem.Models.BODETHI>
+@{
+    ViewBag.Title = "AllowExam";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/Account/Index" class="nav-link">Admin</a>
+        </li>
+    </ul>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Mã bộ đề thi</th>
+            <th>Tên học phần</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var exam in Model)
+        {
+            <tr>
+                <td>@exam.MABODETHI</td>
+                <td>@exam.MAHOCPHAN</td>
+                <td>
+                    @if (exam.IsAllowed)
+                    {
+                        <span class="text-success">Đã cho phép</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Chưa cho phép</span>
+                    }
+                </td>
+                <td>
+                    @if (exam.IsAllowed)
+                    {
+                        <button class="btn btn-danger disallow-exam-button" data-id="@exam.MABODETHI">Không cho phép</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary allow-exam-button" data-id="@exam.MABODETHI">Cho phép</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Xử lý sự kiện click nút "Cho phép"
+        $('.allow-exam-button').click(function () {
+            var bodethiId = $(this).data('id');
+            $.post('@Url.Action("AllowExam", "TKB")', { bodethiId: bodethiId }, function (data) {
+                if (data.success) {
+                    location.reload(); // Tải lại trang sau khi cập nhật thành công
+                } else {
+                    alert('Có lỗi xảy ra khi cho phép bộ đề thi!');
+                }
+            });
+        });
+
+        // Xử lý sự kiện click nút "Không cho phép"
+        $('.disallow-exam-button').click(function () {
+            var bodethiId = $(this).data('id');
+            $.post('@Url.Action("DisallowExam", "TKB")', { bodethiId: bodethiId }, function (data) {
+                if (data.success) {
+                    location.reload(); // Tải lại trang sau khi cập nhật thành công
+                } else {
+                    alert('Có lỗi xảy ra khi không cho phép bộ đề thi!');
+                }
+            });
+        });
+    });
+</script>

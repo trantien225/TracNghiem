@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fc06295f9a3b42d087732e972f0f6f89" Name="Diagram1">
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.BODETHI" Width="1.5" PointX="3" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.BODETHI_CAUHOI" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.CAUHOI" Width="1.5" PointX="3" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.GIANGVIEN" Width="1.5" PointX="6" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.HOCPHAN" Width="1.5" PointX="0.75" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.KETQUA" Width="1.5" PointX="5.25" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.LOPHOCPHAN" Width="1.5" PointX="3" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.LOPHOCPHAN_SINHVIEN" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.SINHVIEN" Width="1.5" PointX="3" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.TAIKHOAN" Width="1.5" PointX="8.25" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="THITRACNGHIEM_ONLModel.LICHTHI" Width="1.5" PointX="8.25" PointY="7.875" IsExpanded="true" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__BODETHI__MAHOCPH__4AB81AF0" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__BODETHI_C__MABOD__4CA06362" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__BODETHI_C__MACAU__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__CAUHOI__MAHOCPHA__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK_TAIKHOAN_GIANGVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__LICHTHI__MAHOCPH__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__LOPHOCPHA__MAHOC__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__KETQUA__MSSV__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__LICHTHI__MALOPHO__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__LOPHOCPHA__MALOP__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__LOPHOCPHAN__MSSV__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK_TAIKHOAN_SINHVIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN1" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__KETQUA__MABODETH__5535A963" />
+        <AssociationConnector Association="THITRACNGHIEM_ONLModel.FK__KETQUA__MAHOCPHA__5441852A" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

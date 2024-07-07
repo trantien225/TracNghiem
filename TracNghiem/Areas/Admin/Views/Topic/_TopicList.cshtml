@@ -1,0 +1,71 @@
+﻿@model IEnumerable<TracNghiem.Models.BODETHI>
+@{
+    ViewBag.Title = "_TopicList";
+    Layout = null;
+}
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Mã bộ đề</th>
+                <th>Mã học phần</th>
+                <th>Số lượng câu hỏi</th>
+                <th>Chi tiết</th>
+                @*<th>Cho phép</th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="trow-@item.MABODETHI">
+                    <td>@item.MABODETHI</td>
+                    <td>@item.MAHOCPHAN</td>
+                    <td>@item.SOLUONGCAUHOI</td>
+                    <td>
+                        <button class="btn btn-info btn-detail" data-bodethi="@item.MABODETHI">Chi tiết</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Không có bộ đề nào.</p>
+}
+
+<!-- Modal chi tiết câu hỏi -->
+<div class="modal fade" id="detailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <!-- Nội dung sẽ được thay thế bởi kết quả trả về từ Ajax -->
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@section Scripts {
+    <script>
+    $(document).ready(function () {
+    // Xử lý sự kiện click vào nút Chi tiết
+    $(document).on('click', '.btn-detail', function () {
+        var bodethiId = $(this).data('bodethi');
+        var url = '@Url.Action("GetQuestionsByTopic", "Topic", new { area = "Admin" })';
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            data: { bodethiId: bodethiId },
+            success: function (result) {
+                $('#detailModal .modal-content').html(result);
+                $('#detailModal').modal('show');
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi khi lấy dữ liệu câu hỏi.');
+            }
+        });
+    });
+    </script>
+}

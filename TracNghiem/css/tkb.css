@@ -1,0 +1,49 @@
+﻿.schedule {
+    width: 90%;
+    max-width: 1200px;
+    border-collapse: collapse;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px auto; /* Canh giữa bảng */
+}
+
+    .schedule thead {
+        background-color: #0073e6;
+        color: #fff;
+    }
+
+    .schedule th, .schedule td {
+        border: 1px solid #ddd;
+        padding: 12px; /* Tăng padding cho phần nội dung */
+        text-align: center;
+    }
+
+    .schedule th {
+        font-size: 20px;
+        font-weight: bold; /* In đậm tiêu đề */
+    }
+
+    .schedule td {
+        font-size: 16px;
+    }
+
+.session {
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+.class {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+}
+
+.time {
+    font-weight: bold;
+    color: #666;
+}
+
+.subject {
+    color: #000;
+}

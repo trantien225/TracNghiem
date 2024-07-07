@@ -1,0 +1,164 @@
+﻿/* Thiết lập font chữ và màu nền chung cho toàn bộ trang */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-height: auto; /* Điều chỉnh chiều cao tối đa */
+    overflow: hidden; /* Ngăn việc cuộn toàn bộ màn hình */
+}
+
+/* Bố cục và đường viền cho phần chứa nội dung thi trắc nghiệm */
+.quiz-container {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Ngăn việc cuộn toàn bộ màn hình */
+}
+
+/* Các thiết lập cho phần danh sách câu hỏi */
+.question-list {
+    width: 25%;
+    border-right: 1px solid #ccc;
+    padding-right: 20px;
+    overflow-y: auto; /* Cho phép cuộn trong danh sách câu hỏi */
+    max-height: 100vh; /* Đặt chiều cao tối đa */
+}
+
+    .question-list h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .question-list ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .question-list li {
+        margin-bottom: 10px;
+    }
+
+        .question-list li a {
+            text-decoration: none;
+            color: #007bff;
+            cursor: pointer;
+            display: block;
+            padding-top:15px;
+        }
+
+            .question-list li a:hover {
+                text-decoration: underline;
+            }
+
+/* Các lựa chọn đáp án */
+.answer-options {
+    padding-left: 55px; /* Thêm khoảng lùi cho phần radio chọn đáp án */
+}
+
+    .answer-options .answer-option {
+        display: flex;
+        margin-bottom: 5px;
+    }
+
+.answer-option label {
+    margin-left: 8px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Phần hiển thị câu hỏi cụ thể */
+.question-display {
+    width: 75%;
+    padding-left: 20px;
+}
+
+.question {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+    .question h3 {
+        font-size: 18px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+/* Nút nộp bài */
+.submit-btn {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+    .submit-btn:hover {
+        background-color: #218838;
+    }
+
+/* Thời gian đếm ngược */
+.timer {
+    font-size: 24px;
+    margin-bottom: 20px;
+    margin-right: 27%; /* Điều chỉnh khoảng cách so với mép phải */
+    text-align: center;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: bisque; /* Màu nền của khung thời gian */
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Đường phân đoạn ngăn cách */
+.divider {
+    border-left: 1px solid #ccc;
+    height: auto;
+    margin: 0 20px;
+}
+
+/* Phần thông tin cá nhân */
+.info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    margin-right: 15px;
+    border-radius: 50%;
+}
+
+.info-text {
+    display: flex;
+    flex-direction: column;
+    margin-left: 35px;
+}
+
+.header-question-list {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    padding: 10px;
+    z-index: 1;
+}
+ul {
+    list-style:none;
+}

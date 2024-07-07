@@ -1,0 +1,107 @@
+﻿@model List<TracNghiem.Models.HOCPHAN>
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/DSCH/Add" class="nav-link">LOAD DANH SÁCH CÂU HỎI</a>
+        </li>
+    </ul>
+}
+
+<!-- Tiêu đề nội dung (Header của trang) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="text-uppercase">Load danh sách câu hỏi </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="~/Admin/HomeAdmin">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">load</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<form id="uploadForm" enctype="multipart/form-data" method="post" action="@Url.Action("Add", "DSCH", new { area = "Admin" })">
+    <div class="form-group">
+        <label for="subjectName" class="form-label">Tên Môn Học:</label>
+        <select id="subjectName" name="subjectName" class="form-control" required>
+            <option value="" disabled selected>Chọn môn học</option>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <option value="@item.MAHOCPHAN">@item.TENHOCPHAN</option>
+                }
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="excelFile">Chọn file Excel:</label>
+        <input type="file" id="excelFile" name="excelFile" class="form-control" accept=".xlsx,.xls" required />
+    </div>
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $(document).ready(function () {
+            // Hàm reload trang sau 1 giây
+            function reloadPage() {
+                setTimeout(function () {
+                    location.reload();
+                }, 1500); // 1000 milliseconds = 1 second
+            }
+
+            $('form').submit(function () {
+                $.ajax({
+                    url: '@Url.Action("Add", "DSCH", new { area = "Admin" })', // Đường dẫn đến action Add
+                    type: 'POST',
+                    data: new FormData(this),
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: 'Tải file và lưu dữ liệu thành công!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                reloadPage(); // Reload trang sau khi hiển thị thông báo
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: response.message || 'Đã xảy ra lỗi trong quá trình xử lý.'
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Lỗi!',
+                            text: 'Đã xảy ra lỗi khi gửi yêu cầu lên server.'
+                        });
+                    }
+                });
+
+                return false; // Ngăn không cho form submit mặc định
+            });
+        });
+    </script>
+}

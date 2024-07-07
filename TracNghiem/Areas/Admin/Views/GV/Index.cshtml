@@ -1,0 +1,63 @@
+﻿@model List<TracNghiem.Models.GIANGVIEN>
+@{
+    ViewBag.Title = "Danh Sách Sinh Viên";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/GV/Index" class="nav-link">DSGV</a>
+        </li>
+    </ul>
+}
+
+<h2 style="text-align:center">DANH SÁCH GIẢNG VIÊN</h2>
+<!-- Mẫu tìm kiếm -->
+<form method="get" action="/Admin/GV/Index">
+    <div class="input-group mb-3">
+        <input type="text" name="search" class="form-control" placeholder="Tìm kiếm...">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+        </div>
+    </div>
+</form>
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>MAGV</th>
+            <th>Họ Tên</th>
+            <th>Giới Tính</th>
+            <th>Ngày Sinh</th>
+            <th>Ảnh</th>
+            <th>SĐT</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var sv in Model)
+        {
+            <tr>
+                <td>@sv.MAGV</td>
+                <td>@sv.HOTEN</td>
+                <td>@sv.GIOITINH</td>
+                <td>@sv.NGAYSINH.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(sv.IMG))
+                    {
+                        <img src="@Url.Content("~/img/Avata/" + sv.IMG)" alt="Ảnh Giảng Viên" style="width: 50px; height: 50px;" />
+                    }
+                    else
+                    {
+                        <span>Không có ảnh</span>
+                    }
+                </td>
+                <td>@sv.SDT</td>
+            </tr>
+        }
+    </tbody>
+</table>

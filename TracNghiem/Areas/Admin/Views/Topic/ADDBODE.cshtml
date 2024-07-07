@@ -1,0 +1,78 @@
+﻿@model TracNghiem.Models.Class1
+
+@{
+    ViewBag.Title = "Thêm bộ đề thi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/topic/addbode" class="nav-link">Tạo bộ đề</a>
+        </li>
+    </ul>
+}
+
+<!-- Tiêu đề nội dung (Header của trang) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="text-uppercase">Tạo bộ đề </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="~/Admin/HomeAdmin">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Tạo bộ đề</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@using (Html.BeginForm("ADDBODE", "Topic", FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.HOCPHANs[0].MAHOCPHAN, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("MAHOCPHAN", Model.CourseList, "Chọn môn học", new { @class = "form-control", id = "courseDropdown" })
+            @Html.ValidationMessageFor(model => model.HOCPHANs[0].MAHOCPHAN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.BODETHI.MABODETHI, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BODETHI.MABODETHI, new { @class = "form-control", required = "required", placeholder = "Nhập mã bộ đề thi..." })
+            @Html.ValidationMessageFor(model => model.BODETHI.MABODETHI, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BODETHI.SOLUONGCAUHOI, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(model => model.BODETHI.SOLUONGCAUHOI, new { @class = "form-control", required = "required", placeholder = "Nhập số lượng câu hỏi..." })
+            @Html.ValidationMessageFor(model => model.BODETHI.SOLUONGCAUHOI, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.BODETHI.IsAllowed, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.BODETHI.IsAllowed, new SelectList(new[] { new { Value = true, Text = "Cho phép" }, new { Value = false, Text = "Không cho phép" } }, "Value", "Text"), "Chọn trạng thái", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BODETHI.IsAllowed, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Thêm" class="btn btn-primary" />
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-default" })
+        </div>
+    </div>
+}

@@ -1,0 +1,191 @@
+﻿    @model TracNghiem.Models.Class4
+
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/Account/Index" class="nav-link">Giảng viên</a>
+        </li>
+    </ul>
+}
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-uppercase" style="font-weight:bold;font-size:20px">Quản lý thi trắc nghiệm giảng viên</h3>
+        </div>
+        <div style="text-align:center;padding-top:10px">
+            @Html.ActionLink("Bảng điểm phòng thi", "PrintResults", "Account", new { maLopHocPhan = ViewBag.SelectedLopHocPhan }, new { @class = "btn btn-primary" })
+        </div>
+        <div class="card-body">
+            <!-- Phần hiển thị thống kê tổng số sinh viên -->
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-success"><i class="fas fa-user-check"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Đã đăng nhập</span>
+                            <span class="info-box-number">@ViewBag.LoggedInCount</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-warning"><i class="fas fa-user-times"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Chưa đăng nhập</span>
+                            <span class="info-box-number">@ViewBag.NotLoggedInCount</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-info"><i class="fas fa-check"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Đã nộp bài</span>
+                            <span class="info-box-number">@ViewBag.CompletedCount</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Form tìm kiếm với dropdown list -->
+            <form method="get" action="/Admin/Account/Index">
+                <div class="input-group mb-3">
+                    <select name="maLopHocPhan" class="form-control">
+                        <option value="">Chọn lớp học phần</option>
+                        @foreach (var item in Model.LOPHOCPHANs)
+                        {
+                            <option value="@item.MALOPHOCPHAN" @(item.MALOPHOCPHAN == ViewBag.SelectedLopHocPhan ? "selected" : "")>@item.TENLOPHOCPHAN</option>
+                        }
+                    </select>
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Xem danh sách</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th>MSSV</th>
+                        <th>Trạng thái</th>
+                        <th>Thông tin</th>
+                        <th>Đặt lại mật khẩu</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach (var item in Model.TAIKHOANs)
+                    {
+                        <tr id="trow-@item.TENTK">
+                            <td>@item.TENTK</td>
+                            @if (item.TRANGTHAI == true)
+                            {
+                                <td>Đã đăng nhập</td>
+                            }
+                            else if (item.TRANGTHAI == false)
+                            {
+                                <td>Chưa đăng nhập</td>
+                            }
+                            else
+                            {
+                                <td>Đã nộp bài</td>
+                            }
+                            <td>
+                                <a href="@Url.Action("Detail", "Account", new { area = "Admin", id = item.TENTK })" class="btn btn-primary">Thông tin</a>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#resetModal" data-id="@item.TENTK" onclick="GetId('@item.TENTK', '@item.TENTK')">
+                                    Đặt lại
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="resetModalLabel">Đặt lại mật khẩu</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div>Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản <strong id="Name-Modal"></strong> không?</div>
+                    <input type="hidden" id="id-Modal">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-danger Ajax-reset">Đặt lại</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@section Ajax{
+    <script>
+        function GetId(id, name) {
+            document.getElementById("id-Modal").value = id;
+            document.getElementById("Name-Modal").innerText = name;
+        }
+
+        $(function () {
+            $('body').on('click', '.Ajax-reset', function (e) {
+                e.preventDefault();
+                var username = document.getElementById('id-Modal').value;
+                $.ajax({
+                    url: '/admin/Account/ResetPassword',
+                    type: 'POST',
+                    data: {
+                        username: username
+                    },
+                    success: function (rs) {
+                        if (rs.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: 'Đặt lại mật khẩu thành công.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                $('#resetModal').modal('hide');
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: 'Đặt lại mật khẩu không thành công. ' + rs.message
+                            });
+                        }
+                    },
+                });
+            });
+        });
+
+        $(function () {
+            var selectedValue = localStorage.getItem('selectedLopHocPhan');
+            if (selectedValue) {
+                $('select[name="maLopHocPhan"]').val(selectedValue);
+            }
+
+            $('select[name="maLopHocPhan"]').change(function () {
+                var selectedValue = $(this).val();
+                localStorage.setItem('selectedLopHocPhan', selectedValue);
+            });
+        });
+    </script>
+}

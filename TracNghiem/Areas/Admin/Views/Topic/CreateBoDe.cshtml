@@ -1,0 +1,71 @@
+﻿@model List<TracNghiem.Models.BODETHI>
+
+@{
+    ViewBag.Title = "Thêm Đề Thi";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<!-- Form để tạo đề thi -->
+@using (Html.BeginForm("CreateBoDe", "Topic", new { area = "Admin" }, FormMethod.Post, new { id = "addTopicForm" }))
+{
+    <div class="form-group">
+        <label for="subjectName" class="form-label">Bộ đề:</label>
+        <select id="subjectName" name="subjectName" class="form-control" required>
+            <option value="" disabled selected>Chọn bộ đề</option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.MABODETHI">@item.MABODETHI</option>
+            }
+        </select>
+    </div>
+    <div class="form-group" style="text-align:center">
+        <label for="selectedQuestions">Câu hỏi:</label>
+        <select style="height:500px" id="selectedQuestions" name="selectedQuestions" class="form-control" multiple required>
+            <!-- Options sẽ được điền tự động bằng JavaScript -->
+        </select>
+    </div>
+
+    <!-- Các input form cần thiết khác có thể được thêm vào đây -->
+    <div style="text-align:center">
+        <button type="submit" class="btn btn-primary">Tạo Đề</button>
+    </div>
+}
+
+<!-- Scripts để xử lý AJAX và các sự kiện -->
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Sự kiện khi chọn một bộ đề
+            $('#subjectName').change(function () {
+                var subjectId = $(this).val();
+                populateQuestions(subjectId);
+            });
+
+            // Hàm để điền câu hỏi dựa trên bộ đề được chọn
+            function populateQuestions(subjectId) {
+                $.ajax({
+                    url: '@Url.Action("GetRandomQuestions", "Topic", new { area = "Admin" })',
+                    type: 'GET',
+                    data: { examId: subjectId },
+                    success: function (data) {
+                        var options = '';
+                        $.each(data, function (key, value) {
+                            options += '<option value="' + value.QuestionId + '">';
+                            options += value.QuestionText + '<br/>'; // Hiển thị nội dung câu hỏi
+                            options += '<span style="font-weight: bold;">Đáp án:</span><br/>'; // Đoạn text hiển thị đáp án
+                            options += 'A. ' + value.AnswerA + '<br/>'; // Đáp án A
+                            options += 'B. ' + value.AnswerB + '<br/>'; // Đáp án B
+                            options += 'C. ' + value.AnswerC + '<br/>'; // Đáp án C
+                            options += 'D. ' + value.AnswerD + '<br/>'; // Đáp án D
+                            options += '</option>';
+                        });
+                        $('#selectedQuestions').html(options);
+                    },
+                    error: function () {
+                        alert('Không thể tải danh sách câu hỏi.');
+                    }
+                });
+            }
+        });
+    </script>
+}

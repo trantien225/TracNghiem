@@ -1,0 +1,170 @@
+﻿@model List<TracNghiem.Models.TAIKHOAN>
+
+@{
+    ViewBag.Title = "Quản lý tài khoản";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/Account/Index" class="nav-link">Admin</a>
+        </li>
+    </ul>
+}
+
+<!-- Tiêu đề nội dung (Header của trang) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="text-uppercase">Quản lý tài khoản</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="~/Admin/HomeAdmin">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Giảng viên</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<!-- Nội dung chính -->
+<section class="content">
+
+    <!-- Hộp mặc định -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title text-uppercase">Danh sách giảng viên</h3>
+            <div class="card-tools"></div>
+        </div>
+        <div class="card-body">
+            <!-- Mẫu tìm kiếm -->
+            <form method="get" action="/Admin/Account/Index">
+                <div class="input-group mb-3">
+                    <input type="text" name="search" class="form-control" placeholder="Tìm kiếm...">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="submit">Tìm kiếm</button>
+                    </div>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr class="text-center">
+                        <th>MSGV</th>
+                        <th>Trạng thái</th>
+                        <th>Đặt lại mật khẩu</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    @foreach (var item in Model)
+                    {
+                        <tr id="trow-@item.TENTK">
+                            <td>@item.TENTK</td>
+                            @if (item.TRANGTHAI == true)
+                            {
+                                <td>Đã đăng nhập</td>
+                            }
+                            else if (item.TRANGTHAI == false)
+                            {
+                                <td>Không hoạt động</td>
+                            }
+                            <td>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#resetModal" data-id="@item.TENTK" onclick="GetId('@item.TENTK', '@item.TENTK')">
+                                    Đặt lại
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</section>
+<!-- /.content -->
+<!-- Modal đặt lại mật khẩu -->
+<div class="modal fade" id="resetModal" tabindex="-1" aria-labelledby="resetModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="resetModalLabel">Đặt lại mật khẩu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>Bạn có chắc chắn muốn đặt lại mật khẩu cho tài khoản <strong id="Name-Modal"></strong> không?</div>
+                <input type="hidden" id="id-Modal">
+                <div class="form-group">
+                    <label for="currentPassword">Mật khẩu hiện tại:</label>
+                    <input type="password" class="form-control" id="currentPassword" placeholder="Nhập mật khẩu hiện tại">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Mật khẩu mới:</label>
+                    <input type="password" class="form-control" id="newPassword" placeholder="Nhập mật khẩu mới">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-danger Ajax-reset">Đặt lại</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+@section Ajax{
+    <script>
+        function GetId(id, name) {
+            document.getElementById("id-Modal").innerText = id;
+            document.getElementById("Name-Modal").innerText = name;
+        }
+
+        $(document).ready(function () {
+            // Xử lý đặt lại mật khẩu
+            $('body').on('click', '.Ajax-reset', function (e) {
+                e.preventDefault();
+                var username = document.getElementById('id-Modal').innerText;
+                var currentPassword = $('#currentPassword').val();
+                var newPassword = $('#newPassword').val();
+
+                $.ajax({
+                    url: '/admin/Account/ResetPasswordAdmin',
+                    type: 'POST',
+                    data: {
+                        username: username,
+                        currentPassword: currentPassword,
+                        newPassword: newPassword
+                    },
+                    success: function (rs) {
+                        if (rs.success) {
+                            // Hiển thị thông báo thành công bằng SweetAlert
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Thành công!',
+                                text: 'Đặt lại mật khẩu thành công.',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then(function () {
+                                $('#resetModal').modal('hide');
+                            });
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Lỗi!',
+                                text: 'Đặt lại mật khẩu không thành công. ' + rs.message
+                            });
+                        }
+                    },
+                });
+            });
+        });
+    </script>
+}

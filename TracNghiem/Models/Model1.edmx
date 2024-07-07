@@ -1,0 +1,958 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="THITRACNGHIEM_ONLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BODETHI">
+          <Key>
+            <PropertyRef Name="MABODETHI" />
+          </Key>
+          <Property Name="MABODETHI" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SOLUONGCAUHOI" Type="int" Nullable="false" />
+          <Property Name="IsAllowed" Type="bit" />
+        </EntityType>
+        <EntityType Name="BODETHI_CAUHOI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MACAUHOI" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MABODETHI" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CAUHOI">
+          <Key>
+            <PropertyRef Name="MACAUHOI" />
+          </Key>
+          <Property Name="MACAUHOI" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TENCAUHOI" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="DAPAN_A" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DAPAN_B" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DAPAN_C" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DAPAN_D" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="DAPANDUNG" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="GIANGVIEN">
+          <Key>
+            <PropertyRef Name="MAGV" />
+          </Key>
+          <Property Name="MAGV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="HOTEN" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="GIOITINH" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="NGAYSINH" Type="date" Nullable="false" />
+          <Property Name="IMG" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SDT" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="HOCPHAN">
+          <Key>
+            <PropertyRef Name="MAHOCPHAN" />
+          </Key>
+          <Property Name="MAHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TENHOCPHAN" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="KETQUA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MSSV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MABODETHI" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SOCAUDUNG" Type="int" Nullable="false" />
+          <Property Name="DIEMTHI" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LICHTHI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MALOPHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="PHONGTHI" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="GV01" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="GV02" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="NGAYTHI" Type="date" Nullable="false" />
+          <Property Name="THOIGIANTHI" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="THOILUONGTHI" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="GHICHU" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="LOPHOCPHAN">
+          <Key>
+            <PropertyRef Name="MALOPHOCPHAN" />
+          </Key>
+          <Property Name="MALOPHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TENLOPHOCPHAN" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOPHOCPHAN_SINHVIEN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MSSV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="MALOPHOCPHAN" Type="varchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SINHVIEN">
+          <Key>
+            <PropertyRef Name="MSSV" />
+          </Key>
+          <Property Name="MSSV" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="HOTEN" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="GIOITINH" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="NGAYSINH" Type="date" Nullable="false" />
+          <Property Name="IMG" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SDT" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="TENTK" />
+          </Key>
+          <Property Name="LOAITK" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="TENTK" Type="nvarchar" MaxLength="11" Nullable="false" />
+          <Property Name="MATKHAU" Type="varchar(max)" Nullable="false" />
+          <Property Name="TRANGTHAI" Type="bit" />
+          <Property Name="MSSV" Type="varchar" MaxLength="10" />
+          <Property Name="MAGV" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK__BODETHI__MAHOCPH__4F7CD00D">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="BODETHI" Type="Self.BODETHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="BODETHI">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BODETHI_C__MABOD__5165187F">
+          <End Role="BODETHI" Type="Self.BODETHI" Multiplicity="1" />
+          <End Role="BODETHI_CAUHOI" Type="Self.BODETHI_CAUHOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BODETHI">
+              <PropertyRef Name="MABODETHI" />
+            </Principal>
+            <Dependent Role="BODETHI_CAUHOI">
+              <PropertyRef Name="MABODETHI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BODETHI_C__MACAU__5070F446">
+          <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="1" />
+          <End Role="BODETHI_CAUHOI" Type="Self.BODETHI_CAUHOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAUHOI">
+              <PropertyRef Name="MACAUHOI" />
+            </Principal>
+            <Dependent Role="BODETHI_CAUHOI">
+              <PropertyRef Name="MACAUHOI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CAUHOI__MAHOCPHA__52593CB8">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="0..1" />
+          <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="CAUHOI">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUA__MABODETH__5535A963">
+          <End Role="BODETHI" Type="Self.BODETHI" Multiplicity="1" />
+          <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BODETHI">
+              <PropertyRef Name="MABODETHI" />
+            </Principal>
+            <Dependent Role="KETQUA">
+              <PropertyRef Name="MABODETHI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUA__MAHOCPHA__5441852A">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="KETQUA">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUA__MSSV__534D60F1">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Principal>
+            <Dependent Role="KETQUA">
+              <PropertyRef Name="MSSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LICHTHI__GV01__5812160E">
+          <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="1" />
+          <End Role="LICHTHI" Type="Self.LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIANGVIEN">
+              <PropertyRef Name="MAGV" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="GV01" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LICHTHI__GV02__59063A47">
+          <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="1" />
+          <End Role="LICHTHI" Type="Self.LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIANGVIEN">
+              <PropertyRef Name="MAGV" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="GV02" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LICHTHI__MAHOCPH__5629CD9C">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="LICHTHI" Type="Self.LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LICHTHI__MALOPHO__571DF1D5">
+          <End Role="LOPHOCPHAN" Type="Self.LOPHOCPHAN" Multiplicity="1" />
+          <End Role="LICHTHI" Type="Self.LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOPHOCPHAN">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOPHOCPHA__MAHOC__59FA5E80">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="LOPHOCPHAN" Type="Self.LOPHOCPHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="LOPHOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOPHOCPHA__MALOP__5BE2A6F2">
+          <End Role="LOPHOCPHAN" Type="Self.LOPHOCPHAN" Multiplicity="1" />
+          <End Role="LOPHOCPHAN_SINHVIEN" Type="Self.LOPHOCPHAN_SINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOPHOCPHAN">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Principal>
+            <Dependent Role="LOPHOCPHAN_SINHVIEN">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOPHOCPHAN__MSSV__5AEE82B9">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="LOPHOCPHAN_SINHVIEN" Type="Self.LOPHOCPHAN_SINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Principal>
+            <Dependent Role="LOPHOCPHAN_SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_GIANGVIEN">
+          <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIANGVIEN">
+              <PropertyRef Name="MAGV" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MAGV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_SINHVIEN">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MSSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="THITRACNGHIEM_ONLModelStoreContainer">
+          <EntitySet Name="BODETHI" EntityType="Self.BODETHI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BODETHI_CAUHOI" EntityType="Self.BODETHI_CAUHOI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAUHOI" EntityType="Self.CAUHOI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GIANGVIEN" EntityType="Self.GIANGVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="HOCPHAN" EntityType="Self.HOCPHAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KETQUA" EntityType="Self.KETQUA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LICHTHI" EntityType="Self.LICHTHI" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOPHOCPHAN" EntityType="Self.LOPHOCPHAN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOPHOCPHAN_SINHVIEN" EntityType="Self.LOPHOCPHAN_SINHVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SINHVIEN" EntityType="Self.SINHVIEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TAIKHOAN" EntityType="Self.TAIKHOAN" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__BODETHI__MAHOCPH__4F7CD00D" Association="Self.FK__BODETHI__MAHOCPH__4F7CD00D">
+            <End Role="HOCPHAN" EntitySet="HOCPHAN" />
+            <End Role="BODETHI" EntitySet="BODETHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BODETHI_C__MABOD__5165187F" Association="Self.FK__BODETHI_C__MABOD__5165187F">
+            <End Role="BODETHI" EntitySet="BODETHI" />
+            <End Role="BODETHI_CAUHOI" EntitySet="BODETHI_CAUHOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BODETHI_C__MACAU__5070F446" Association="Self.FK__BODETHI_C__MACAU__5070F446">
+            <End Role="CAUHOI" EntitySet="CAUHOI" />
+            <End Role="BODETHI_CAUHOI" EntitySet="BODETHI_CAUHOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CAUHOI__MAHOCPHA__52593CB8" Association="Self.FK__CAUHOI__MAHOCPHA__52593CB8">
+            <End Role="HOCPHAN" EntitySet="HOCPHAN" />
+            <End Role="CAUHOI" EntitySet="CAUHOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUA__MABODETH__5535A963" Association="Self.FK__KETQUA__MABODETH__5535A963">
+            <End Role="BODETHI" EntitySet="BODETHI" />
+            <End Role="KETQUA" EntitySet="KETQUA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUA__MAHOCPHA__5441852A" Association="Self.FK__KETQUA__MAHOCPHA__5441852A">
+            <End Role="HOCPHAN" EntitySet="HOCPHAN" />
+            <End Role="KETQUA" EntitySet="KETQUA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUA__MSSV__534D60F1" Association="Self.FK__KETQUA__MSSV__534D60F1">
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+            <End Role="KETQUA" EntitySet="KETQUA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LICHTHI__GV01__5812160E" Association="Self.FK__LICHTHI__GV01__5812160E">
+            <End Role="GIANGVIEN" EntitySet="GIANGVIEN" />
+            <End Role="LICHTHI" EntitySet="LICHTHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LICHTHI__GV02__59063A47" Association="Self.FK__LICHTHI__GV02__59063A47">
+            <End Role="GIANGVIEN" EntitySet="GIANGVIEN" />
+            <End Role="LICHTHI" EntitySet="LICHTHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LICHTHI__MAHOCPH__5629CD9C" Association="Self.FK__LICHTHI__MAHOCPH__5629CD9C">
+            <End Role="HOCPHAN" EntitySet="HOCPHAN" />
+            <End Role="LICHTHI" EntitySet="LICHTHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LICHTHI__MALOPHO__571DF1D5" Association="Self.FK__LICHTHI__MALOPHO__571DF1D5">
+            <End Role="LOPHOCPHAN" EntitySet="LOPHOCPHAN" />
+            <End Role="LICHTHI" EntitySet="LICHTHI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOPHOCPHA__MAHOC__59FA5E80" Association="Self.FK__LOPHOCPHA__MAHOC__59FA5E80">
+            <End Role="HOCPHAN" EntitySet="HOCPHAN" />
+            <End Role="LOPHOCPHAN" EntitySet="LOPHOCPHAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOPHOCPHA__MALOP__5BE2A6F2" Association="Self.FK__LOPHOCPHA__MALOP__5BE2A6F2">
+            <End Role="LOPHOCPHAN" EntitySet="LOPHOCPHAN" />
+            <End Role="LOPHOCPHAN_SINHVIEN" EntitySet="LOPHOCPHAN_SINHVIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOPHOCPHAN__MSSV__5AEE82B9" Association="Self.FK__LOPHOCPHAN__MSSV__5AEE82B9">
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+            <End Role="LOPHOCPHAN_SINHVIEN" EntitySet="LOPHOCPHAN_SINHVIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_GIANGVIEN" Association="Self.FK_TAIKHOAN_GIANGVIEN">
+            <End Role="GIANGVIEN" EntitySet="GIANGVIEN" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_SINHVIEN" Association="Self.FK_TAIKHOAN_SINHVIEN">
+            <End Role="SINHVIEN" EntitySet="SINHVIEN" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOAN" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="THITRACNGHIEM_ONLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BODETHI">
+          <Key>
+            <PropertyRef Name="MABODETHI" />
+          </Key>
+          <Property Name="MABODETHI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SOLUONGCAUHOI" Type="Int32" Nullable="false" />
+          <Property Name="IsAllowed" Type="Boolean" />
+          <NavigationProperty Name="HOCPHAN" Relationship="Self.FK__BODETHI__MAHOCPH__4AB81AF0" FromRole="BODETHI" ToRole="HOCPHAN" />
+          <NavigationProperty Name="BODETHI_CAUHOI" Relationship="Self.FK__BODETHI_C__MABOD__4CA06362" FromRole="BODETHI" ToRole="BODETHI_CAUHOI" />
+          <NavigationProperty Name="KETQUAs" Relationship="THITRACNGHIEM_ONLModel.FK__KETQUA__MABODETH__5535A963" FromRole="BODETHI" ToRole="KETQUA" />
+        </EntityType>
+        <EntityType Name="BODETHI_CAUHOI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MACAUHOI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MABODETHI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="BODETHI" Relationship="Self.FK__BODETHI_C__MABOD__4CA06362" FromRole="BODETHI_CAUHOI" ToRole="BODETHI" />
+          <NavigationProperty Name="CAUHOI" Relationship="Self.FK__BODETHI_C__MACAU__4BAC3F29" FromRole="BODETHI_CAUHOI" ToRole="CAUHOI" />
+        </EntityType>
+        <EntityType Name="CAUHOI">
+          <Key>
+            <PropertyRef Name="MACAUHOI" />
+          </Key>
+          <Property Name="MACAUHOI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TENCAUHOI" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DAPAN_A" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DAPAN_B" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DAPAN_C" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DAPAN_D" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DAPANDUNG" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BODETHI_CAUHOI" Relationship="Self.FK__BODETHI_C__MACAU__4BAC3F29" FromRole="CAUHOI" ToRole="BODETHI_CAUHOI" />
+          <NavigationProperty Name="HOCPHAN" Relationship="Self.FK__CAUHOI__MAHOCPHA__4D94879B" FromRole="CAUHOI" ToRole="HOCPHAN" />
+        </EntityType>
+        <EntityType Name="GIANGVIEN">
+          <Key>
+            <PropertyRef Name="MAGV" />
+          </Key>
+          <Property Name="MAGV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HOTEN" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GIOITINH" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NGAYSINH" Type="DateTime" Precision="0" Nullable="false" />
+          <Property Name="IMG" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TAIKHOANs" Relationship="Self.FK_TAIKHOAN_GIANGVIEN" FromRole="GIANGVIEN" ToRole="TAIKHOAN" />
+          <NavigationProperty Name="LICHTHIs" Relationship="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN" FromRole="GIANGVIEN" ToRole="LICHTHI" />
+          <NavigationProperty Name="LICHTHIs1" Relationship="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN1" FromRole="GIANGVIEN" ToRole="LICHTHI" />
+        </EntityType>
+        <EntityType Name="HOCPHAN">
+          <Key>
+            <PropertyRef Name="MAHOCPHAN" />
+          </Key>
+          <Property Name="MAHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TENHOCPHAN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BODETHIs" Relationship="Self.FK__BODETHI__MAHOCPH__4AB81AF0" FromRole="HOCPHAN" ToRole="BODETHI" />
+          <NavigationProperty Name="CAUHOIs" Relationship="Self.FK__CAUHOI__MAHOCPHA__4D94879B" FromRole="HOCPHAN" ToRole="CAUHOI" />
+          <NavigationProperty Name="LICHTHIs" Relationship="Self.FK__LICHTHI__MAHOCPH__4F7CD00D" FromRole="HOCPHAN" ToRole="LICHTHI" />
+          <NavigationProperty Name="LOPHOCPHANs" Relationship="Self.FK__LOPHOCPHA__MAHOC__5165187F" FromRole="HOCPHAN" ToRole="LOPHOCPHAN" />
+          <NavigationProperty Name="KETQUAs" Relationship="THITRACNGHIEM_ONLModel.FK__KETQUA__MAHOCPHA__5441852A" FromRole="HOCPHAN" ToRole="KETQUA" />
+        </EntityType>
+        <EntityType Name="KETQUA">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MSSV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MABODETHI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SOCAUDUNG" Type="Int32" Nullable="false" />
+          <Property Name="DIEMTHI" Type="Double" Nullable="false" />
+          <NavigationProperty Name="SINHVIEN" Relationship="Self.FK__KETQUA__MSSV__4E88ABD4" FromRole="KETQUA" ToRole="SINHVIEN" />
+          <Property Name="MAHOCPHAN" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="BODETHI" Relationship="THITRACNGHIEM_ONLModel.FK__KETQUA__MABODETH__5535A963" FromRole="KETQUA" ToRole="BODETHI" />
+          <NavigationProperty Name="HOCPHAN" Relationship="THITRACNGHIEM_ONLModel.FK__KETQUA__MAHOCPHA__5441852A" FromRole="KETQUA" ToRole="HOCPHAN" />
+        </EntityType>
+        <EntityType Name="LOPHOCPHAN">
+          <Key>
+            <PropertyRef Name="MALOPHOCPHAN" />
+          </Key>
+          <Property Name="MALOPHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TENLOPHOCPHAN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MAHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="HOCPHAN" Relationship="Self.FK__LOPHOCPHA__MAHOC__5165187F" FromRole="LOPHOCPHAN" ToRole="HOCPHAN" />
+          <NavigationProperty Name="LICHTHIs" Relationship="Self.FK__LICHTHI__MALOPHO__5070F446" FromRole="LOPHOCPHAN" ToRole="LICHTHI" />
+          <NavigationProperty Name="LOPHOCPHAN_SINHVIEN" Relationship="Self.FK__LOPHOCPHA__MALOP__534D60F1" FromRole="LOPHOCPHAN" ToRole="LOPHOCPHAN_SINHVIEN" />
+        </EntityType>
+        <EntityType Name="LOPHOCPHAN_SINHVIEN">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MSSV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MALOPHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="LOPHOCPHAN" Relationship="Self.FK__LOPHOCPHA__MALOP__534D60F1" FromRole="LOPHOCPHAN_SINHVIEN" ToRole="LOPHOCPHAN" />
+          <NavigationProperty Name="SINHVIEN" Relationship="Self.FK__LOPHOCPHAN__MSSV__52593CB8" FromRole="LOPHOCPHAN_SINHVIEN" ToRole="SINHVIEN" />
+        </EntityType>
+        <EntityType Name="SINHVIEN">
+          <Key>
+            <PropertyRef Name="MSSV" />
+          </Key>
+          <Property Name="MSSV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="HOTEN" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GIOITINH" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NGAYSINH" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="IMG" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SDT" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="KETQUAs" Relationship="Self.FK__KETQUA__MSSV__4E88ABD4" FromRole="SINHVIEN" ToRole="KETQUA" />
+          <NavigationProperty Name="LOPHOCPHAN_SINHVIEN" Relationship="Self.FK__LOPHOCPHAN__MSSV__52593CB8" FromRole="SINHVIEN" ToRole="LOPHOCPHAN_SINHVIEN" />
+          <NavigationProperty Name="TAIKHOANs" Relationship="Self.FK_TAIKHOAN_SINHVIEN" FromRole="SINHVIEN" ToRole="TAIKHOAN" />
+        </EntityType>
+        <EntityType Name="TAIKHOAN">
+          <Key>
+            <PropertyRef Name="TENTK" />
+          </Key>
+          <Property Name="LOAITK" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TENTK" Type="String" MaxLength="11" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="MATKHAU" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TRANGTHAI" Type="Boolean" />
+          <Property Name="MSSV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="MAGV" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GIANGVIEN" Relationship="Self.FK_TAIKHOAN_GIANGVIEN" FromRole="TAIKHOAN" ToRole="GIANGVIEN" />
+          <NavigationProperty Name="SINHVIEN" Relationship="Self.FK_TAIKHOAN_SINHVIEN" FromRole="TAIKHOAN" ToRole="SINHVIEN" />
+        </EntityType>
+        <EntityType Name="LICHTHI">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="MAHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MALOPHOCPHAN" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="NGAYTHI" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="THOIGIANTHI" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="THOILUONGTHI" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="GHICHU" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="HOCPHAN" Relationship="Self.FK__LICHTHI__MAHOCPH__4F7CD00D" FromRole="LICHTHI" ToRole="HOCPHAN" />
+          <NavigationProperty Name="LOPHOCPHAN" Relationship="Self.FK__LICHTHI__MALOPHO__5070F446" FromRole="LICHTHI" ToRole="LOPHOCPHAN" />
+          <Property Name="PHONGTHI" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="GV01" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="GV02" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GIANGVIEN" Relationship="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN" FromRole="LICHTHI" ToRole="GIANGVIEN" />
+          <NavigationProperty Name="GIANGVIEN1" Relationship="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN1" FromRole="LICHTHI" ToRole="GIANGVIEN" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
+        <Association Name="FK__BODETHI__MAHOCPH__4AB81AF0">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="BODETHI" Type="Self.BODETHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="BODETHI">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BODETHI_C__MABOD__4CA06362">
+          <End Role="BODETHI" Type="Self.BODETHI" Multiplicity="1" />
+          <End Role="BODETHI_CAUHOI" Type="Self.BODETHI_CAUHOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BODETHI">
+              <PropertyRef Name="MABODETHI" />
+            </Principal>
+            <Dependent Role="BODETHI_CAUHOI">
+              <PropertyRef Name="MABODETHI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BODETHI_C__MACAU__4BAC3F29">
+          <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="1" />
+          <End Role="BODETHI_CAUHOI" Type="Self.BODETHI_CAUHOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAUHOI">
+              <PropertyRef Name="MACAUHOI" />
+            </Principal>
+            <Dependent Role="BODETHI_CAUHOI">
+              <PropertyRef Name="MACAUHOI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CAUHOI__MAHOCPHA__4D94879B">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="0..1" />
+          <End Role="CAUHOI" Type="Self.CAUHOI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="CAUHOI">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_GIANGVIEN">
+          <End Role="GIANGVIEN" Type="Self.GIANGVIEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIANGVIEN">
+              <PropertyRef Name="MAGV" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MAGV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LICHTHI__MAHOCPH__4F7CD00D">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="LICHTHI" Type="Self.LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOPHOCPHA__MAHOC__5165187F">
+          <End Role="HOCPHAN" Type="Self.HOCPHAN" Multiplicity="1" />
+          <End Role="LOPHOCPHAN" Type="Self.LOPHOCPHAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="LOPHOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUA__MSSV__4E88ABD4">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="KETQUA" Type="Self.KETQUA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Principal>
+            <Dependent Role="KETQUA">
+              <PropertyRef Name="MSSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LICHTHI__MALOPHO__5070F446">
+          <End Role="LOPHOCPHAN" Type="Self.LOPHOCPHAN" Multiplicity="1" />
+          <End Role="LICHTHI" Type="Self.LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOPHOCPHAN">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOPHOCPHA__MALOP__534D60F1">
+          <End Role="LOPHOCPHAN" Type="Self.LOPHOCPHAN" Multiplicity="1" />
+          <End Role="LOPHOCPHAN_SINHVIEN" Type="Self.LOPHOCPHAN_SINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOPHOCPHAN">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Principal>
+            <Dependent Role="LOPHOCPHAN_SINHVIEN">
+              <PropertyRef Name="MALOPHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LOPHOCPHAN__MSSV__52593CB8">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="1" />
+          <End Role="LOPHOCPHAN_SINHVIEN" Type="Self.LOPHOCPHAN_SINHVIEN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Principal>
+            <Dependent Role="LOPHOCPHAN_SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TAIKHOAN_SINHVIEN">
+          <End Role="SINHVIEN" Type="Self.SINHVIEN" Multiplicity="0..1" />
+          <End Role="TAIKHOAN" Type="Self.TAIKHOAN" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SINHVIEN">
+              <PropertyRef Name="MSSV" />
+            </Principal>
+            <Dependent Role="TAIKHOAN">
+              <PropertyRef Name="MSSV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="THITRACNGHIEM_ONL" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BODETHIs" EntityType="Self.BODETHI" />
+          <EntitySet Name="BODETHI_CAUHOI" EntityType="Self.BODETHI_CAUHOI" />
+          <EntitySet Name="CAUHOIs" EntityType="Self.CAUHOI" />
+          <EntitySet Name="GIANGVIENs" EntityType="Self.GIANGVIEN" />
+          <EntitySet Name="HOCPHANs" EntityType="Self.HOCPHAN" />
+          <EntitySet Name="KETQUAs" EntityType="Self.KETQUA" />
+          <EntitySet Name="LOPHOCPHANs" EntityType="Self.LOPHOCPHAN" />
+          <EntitySet Name="LOPHOCPHAN_SINHVIEN" EntityType="Self.LOPHOCPHAN_SINHVIEN" />
+          <EntitySet Name="SINHVIENs" EntityType="Self.SINHVIEN" />
+          <EntitySet Name="TAIKHOANs" EntityType="Self.TAIKHOAN" />
+          <EntitySet Name="LICHTHIs" EntityType="Self.LICHTHI" />
+          <AssociationSet Name="FK__BODETHI__MAHOCPH__4AB81AF0" Association="Self.FK__BODETHI__MAHOCPH__4AB81AF0">
+            <End Role="HOCPHAN" EntitySet="HOCPHANs" />
+            <End Role="BODETHI" EntitySet="BODETHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BODETHI_C__MABOD__4CA06362" Association="Self.FK__BODETHI_C__MABOD__4CA06362">
+            <End Role="BODETHI" EntitySet="BODETHIs" />
+            <End Role="BODETHI_CAUHOI" EntitySet="BODETHI_CAUHOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BODETHI_C__MACAU__4BAC3F29" Association="Self.FK__BODETHI_C__MACAU__4BAC3F29">
+            <End Role="CAUHOI" EntitySet="CAUHOIs" />
+            <End Role="BODETHI_CAUHOI" EntitySet="BODETHI_CAUHOI" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CAUHOI__MAHOCPHA__4D94879B" Association="Self.FK__CAUHOI__MAHOCPHA__4D94879B">
+            <End Role="HOCPHAN" EntitySet="HOCPHANs" />
+            <End Role="CAUHOI" EntitySet="CAUHOIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_GIANGVIEN" Association="Self.FK_TAIKHOAN_GIANGVIEN">
+            <End Role="GIANGVIEN" EntitySet="GIANGVIENs" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LICHTHI__MAHOCPH__4F7CD00D" Association="Self.FK__LICHTHI__MAHOCPH__4F7CD00D">
+            <End Role="HOCPHAN" EntitySet="HOCPHANs" />
+            <End Role="LICHTHI" EntitySet="LICHTHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOPHOCPHA__MAHOC__5165187F" Association="Self.FK__LOPHOCPHA__MAHOC__5165187F">
+            <End Role="HOCPHAN" EntitySet="HOCPHANs" />
+            <End Role="LOPHOCPHAN" EntitySet="LOPHOCPHANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUA__MSSV__4E88ABD4" Association="Self.FK__KETQUA__MSSV__4E88ABD4">
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+            <End Role="KETQUA" EntitySet="KETQUAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LICHTHI__MALOPHO__5070F446" Association="Self.FK__LICHTHI__MALOPHO__5070F446">
+            <End Role="LOPHOCPHAN" EntitySet="LOPHOCPHANs" />
+            <End Role="LICHTHI" EntitySet="LICHTHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOPHOCPHA__MALOP__534D60F1" Association="Self.FK__LOPHOCPHA__MALOP__534D60F1">
+            <End Role="LOPHOCPHAN" EntitySet="LOPHOCPHANs" />
+            <End Role="LOPHOCPHAN_SINHVIEN" EntitySet="LOPHOCPHAN_SINHVIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LOPHOCPHAN__MSSV__52593CB8" Association="Self.FK__LOPHOCPHAN__MSSV__52593CB8">
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+            <End Role="LOPHOCPHAN_SINHVIEN" EntitySet="LOPHOCPHAN_SINHVIEN" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TAIKHOAN_SINHVIEN" Association="Self.FK_TAIKHOAN_SINHVIEN">
+            <End Role="SINHVIEN" EntitySet="SINHVIENs" />
+            <End Role="TAIKHOAN" EntitySet="TAIKHOANs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LICHTHI_GIANGVIEN" Association="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN">
+            <End Role="GIANGVIEN" EntitySet="GIANGVIENs" />
+            <End Role="LICHTHI" EntitySet="LICHTHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LICHTHI_GIANGVIEN1" Association="THITRACNGHIEM_ONLModel.FK_LICHTHI_GIANGVIEN1">
+            <End Role="GIANGVIEN" EntitySet="GIANGVIENs" />
+            <End Role="LICHTHI" EntitySet="LICHTHIs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUA__MABODETH__5535A963" Association="THITRACNGHIEM_ONLModel.FK__KETQUA__MABODETH__5535A963">
+            <End Role="BODETHI" EntitySet="BODETHIs" />
+            <End Role="KETQUA" EntitySet="KETQUAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__KETQUA__MAHOCPHA__5441852A" Association="THITRACNGHIEM_ONLModel.FK__KETQUA__MAHOCPHA__5441852A">
+            <End Role="HOCPHAN" EntitySet="HOCPHANs" />
+            <End Role="KETQUA" EntitySet="KETQUAs" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_LICHTHI_GIANGVIEN">
+          <End Type="THITRACNGHIEM_ONLModel.GIANGVIEN" Role="GIANGVIEN" Multiplicity="1" />
+          <End Type="THITRACNGHIEM_ONLModel.LICHTHI" Role="LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIANGVIEN">
+              <PropertyRef Name="MAGV" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="GV01" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LICHTHI_GIANGVIEN1">
+          <End Type="THITRACNGHIEM_ONLModel.GIANGVIEN" Role="GIANGVIEN" Multiplicity="1" />
+          <End Type="THITRACNGHIEM_ONLModel.LICHTHI" Role="LICHTHI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GIANGVIEN">
+              <PropertyRef Name="MAGV" />
+            </Principal>
+            <Dependent Role="LICHTHI">
+              <PropertyRef Name="GV02" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUA__MABODETH__5535A963">
+          <End Type="THITRACNGHIEM_ONLModel.BODETHI" Role="BODETHI" Multiplicity="1" />
+          <End Type="THITRACNGHIEM_ONLModel.KETQUA" Role="KETQUA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BODETHI">
+              <PropertyRef Name="MABODETHI" />
+            </Principal>
+            <Dependent Role="KETQUA">
+              <PropertyRef Name="MABODETHI" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__KETQUA__MAHOCPHA__5441852A">
+          <End Type="THITRACNGHIEM_ONLModel.HOCPHAN" Role="HOCPHAN" Multiplicity="1" />
+          <End Type="THITRACNGHIEM_ONLModel.KETQUA" Role="KETQUA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HOCPHAN">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Principal>
+            <Dependent Role="KETQUA">
+              <PropertyRef Name="MAHOCPHAN" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="THITRACNGHIEM_ONLModelStoreContainer" CdmEntityContainer="THITRACNGHIEM_ONL">
+          <EntitySetMapping Name="BODETHIs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.BODETHI">
+              <MappingFragment StoreEntitySet="BODETHI">
+                <ScalarProperty Name="MABODETHI" ColumnName="MABODETHI" />
+                <ScalarProperty Name="MAHOCPHAN" ColumnName="MAHOCPHAN" />
+                <ScalarProperty Name="SOLUONGCAUHOI" ColumnName="SOLUONGCAUHOI" />
+                <ScalarProperty Name="IsAllowed" ColumnName="IsAllowed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BODETHI_CAUHOI">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.BODETHI_CAUHOI">
+              <MappingFragment StoreEntitySet="BODETHI_CAUHOI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MACAUHOI" ColumnName="MACAUHOI" />
+                <ScalarProperty Name="MABODETHI" ColumnName="MABODETHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAUHOIs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.CAUHOI">
+              <MappingFragment StoreEntitySet="CAUHOI">
+                <ScalarProperty Name="MACAUHOI" ColumnName="MACAUHOI" />
+                <ScalarProperty Name="TENCAUHOI" ColumnName="TENCAUHOI" />
+                <ScalarProperty Name="DAPAN_A" ColumnName="DAPAN_A" />
+                <ScalarProperty Name="DAPAN_B" ColumnName="DAPAN_B" />
+                <ScalarProperty Name="DAPAN_C" ColumnName="DAPAN_C" />
+                <ScalarProperty Name="DAPAN_D" ColumnName="DAPAN_D" />
+                <ScalarProperty Name="DAPANDUNG" ColumnName="DAPANDUNG" />
+                <ScalarProperty Name="MAHOCPHAN" ColumnName="MAHOCPHAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GIANGVIENs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.GIANGVIEN">
+              <MappingFragment StoreEntitySet="GIANGVIEN">
+                <ScalarProperty Name="MAGV" ColumnName="MAGV" />
+                <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+                <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+                <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+                <ScalarProperty Name="IMG" ColumnName="IMG" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HOCPHANs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.HOCPHAN">
+              <MappingFragment StoreEntitySet="HOCPHAN">
+                <ScalarProperty Name="MAHOCPHAN" ColumnName="MAHOCPHAN" />
+                <ScalarProperty Name="TENHOCPHAN" ColumnName="TENHOCPHAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KETQUAs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.KETQUA">
+              <MappingFragment StoreEntitySet="KETQUA">
+                <ScalarProperty Name="MAHOCPHAN" ColumnName="MAHOCPHAN" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="MABODETHI" ColumnName="MABODETHI" />
+                <ScalarProperty Name="SOCAUDUNG" ColumnName="SOCAUDUNG" />
+                <ScalarProperty Name="DIEMTHI" ColumnName="DIEMTHI" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOPHOCPHANs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.LOPHOCPHAN">
+              <MappingFragment StoreEntitySet="LOPHOCPHAN">
+                <ScalarProperty Name="MALOPHOCPHAN" ColumnName="MALOPHOCPHAN" />
+                <ScalarProperty Name="TENLOPHOCPHAN" ColumnName="TENLOPHOCPHAN" />
+                <ScalarProperty Name="MAHOCPHAN" ColumnName="MAHOCPHAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOPHOCPHAN_SINHVIEN">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.LOPHOCPHAN_SINHVIEN">
+              <MappingFragment StoreEntitySet="LOPHOCPHAN_SINHVIEN">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="MALOPHOCPHAN" ColumnName="MALOPHOCPHAN" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SINHVIENs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.SINHVIEN">
+              <MappingFragment StoreEntitySet="SINHVIEN">
+                <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="HOTEN" ColumnName="HOTEN" />
+                <ScalarProperty Name="GIOITINH" ColumnName="GIOITINH" />
+                <ScalarProperty Name="NGAYSINH" ColumnName="NGAYSINH" />
+                <ScalarProperty Name="IMG" ColumnName="IMG" />
+                <ScalarProperty Name="SDT" ColumnName="SDT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TAIKHOANs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.TAIKHOAN">
+              <MappingFragment StoreEntitySet="TAIKHOAN">
+                <ScalarProperty Name="LOAITK" ColumnName="LOAITK" />
+                <ScalarProperty Name="TENTK" ColumnName="TENTK" />
+                <ScalarProperty Name="MATKHAU" ColumnName="MATKHAU" />
+                <ScalarProperty Name="TRANGTHAI" ColumnName="TRANGTHAI" />
+                <ScalarProperty Name="MSSV" ColumnName="MSSV" />
+                <ScalarProperty Name="MAGV" ColumnName="MAGV" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LICHTHIs">
+            <EntityTypeMapping TypeName="THITRACNGHIEM_ONLModel.LICHTHI">
+              <MappingFragment StoreEntitySet="LICHTHI">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="GV02" ColumnName="GV02" />
+                <ScalarProperty Name="GV01" ColumnName="GV01" />
+                <ScalarProperty Name="PHONGTHI" ColumnName="PHONGTHI" />
+                <ScalarProperty Name="MAHOCPHAN" ColumnName="MAHOCPHAN" />
+                <ScalarProperty Name="MALOPHOCPHAN" ColumnName="MALOPHOCPHAN" />
+                <ScalarProperty Name="NGAYTHI" ColumnName="NGAYTHI" />
+                <ScalarProperty Name="THOIGIANTHI" ColumnName="THOIGIANTHI" />
+                <ScalarProperty Name="THOILUONGTHI" ColumnName="THOILUONGTHI" />
+                <ScalarProperty Name="GHICHU" ColumnName="GHICHU" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

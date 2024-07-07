@@ -1,0 +1,480 @@
+﻿@model TracNghiem.Models.ThiViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thi trắc nghiệm</title>
+    <link href="~/css/start.css" rel="stylesheet" />
+    <link rel="icon" href="~/img/Avata/hufi.jpg" type="image/x-icon" />
+    <style>
+        .question-navigation {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+            .question-navigation button {
+                background-color: goldenrod;
+                border: none;
+                color: white;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+
+        /*Bảng chú thích*/
+        .legend {
+            margin-top: 20px;
+        }
+
+        .legend-box {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #000;
+        }
+
+        .undecided {
+            background-color: red;
+        }
+
+        .selected {
+            background-color: black;
+        }
+
+        .not-selected {
+            background-color: blue;
+        }
+
+        .filter-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+            .filter-buttons button {
+                padding: 10px 3px;
+                border: none;
+                border-radius: 5px;
+                background-color: #007bff;
+                color: white;
+                cursor: pointer;
+                font-size: 15px;
+                transition: background-color 0.3s ease;
+            }
+
+                .filter-buttons button:hover {
+                    background-color: #0056b3;
+                }
+
+                .filter-buttons button:focus {
+                    outline: none;
+                    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5);
+                }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <!-- Display student information and question -->
+        <div class="question-display">
+            <form id="quiz-form">
+                <!-- Student information -->
+                <div class="info">
+                    @{
+                        var fileNamePNG = Model.Student.MSSV + ".png";
+                        var fileNameJPG = Model.Student.MSSV + ".jpg";
+                        var imagePathPNG = $"~/img/Avata/{fileNamePNG}";
+                        var imagePathJPG = $"~/img/Avata/{fileNameJPG}";
+                        var imageUrl = "";
+                        if (System.IO.File.Exists(Server.MapPath(imagePathPNG)))
+                        {
+                            imageUrl = imagePathPNG;
+                        }
+                        else if (System.IO.File.Exists(Server.MapPath(imagePathJPG)))
+                        {
+                            imageUrl = imagePathJPG;
+                        }
+                        else
+                        {
+                            imageUrl = "~/img/Avata/user.png";
+                        }
+                    }
+                    <img src="@Url.Content(imageUrl)" alt="Avatar" class="img-thumbnail" style="max-width: 150px;">
+                    <div class="info-text">
+                        <p>MSSV:      @Model.Student.MSSV</p>
+                        <p>Họ Và Tên: @Model.Student.HOTEN</p>
+                        <p>Ngày sinh: @Model.Student.NGAYSINH.ToString("dd/MM/yyyy")</p>
+                        <p>Học phần:  @Model.tenhocphan</p>
+                    </div>
+                </div>
+                <!-- Exam subject -->
+                <div style="font-size:20px;color:goldenrod;margin-top:20px">
+                </div>
+                <!-- Specific question -->
+                <div class="start" id="current-question" style="margin-top:50px">
+                    <h3>Vui lòng chọn một câu hỏi từ danh sách.</h3>
+                </div>
+            </form>
+        </div>
+        <!-- Timer -->
+        <div class="timer" id="timer"></div>
+        <!-- Divider -->
+        <div class="divider"></div>
+        <!-- Question list -->
+        <div class="question-list">
+            <div class="header-question-list">
+                <button type="button" class="submit-btn" onclick="submitQuiz()">Nộp bài</button>
+
+                <!-- Chú thích -->
+                <div class="legend">
+                    <div><span class="legend-box selected"></span>Đã chọn đáp án</div>
+                    <div><span class="legend-box undecided"></span>Đang phân vân</div>
+                    <div><span class="legend-box not-selected"></span>Chưa chọn đáp án</div>
+                </div>
+                <!-- Lọc dạng câu -->
+                <div class="filter-buttons">
+                    <button type="button" onclick="filterQuestions('all')">Tất cả</button>
+                    <button type="button" onclick="filterQuestions('not-selected')">Câu chưa làm</button>
+                    <button type="button" onclick="filterQuestions('undecided')">Câu đang phân vân</button>
+                </div>
+
+                <hr class="solid" style="border-top: 3px solid #bbb;">
+
+                <h2>Danh sách câu hỏi</h2>
+            </div>
+            <ul id="question-list">
+                <!-- Questions will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script to load question data from ViewBag.QuizData -->
+    <script>
+        const quizData = @Html.Raw(ViewBag.QuizData);
+        // Biến lưu trữ kết quả người dùng chọn cho mỗi câu hỏi
+        let userAnswers = new Array(quizData.length).fill(null);
+        let undecidedQuestions = new Set();
+        // Giá trị thời gian làm bài
+        const initialTime = @Model.thoiluongthi*60; // 10 phút
+        let isHalfTimeElapsed = false;
+        // Function to load question list
+        //function loadQuestionList() {
+        //    const questionList = document.getElementById('question-list');
+        //    quizData.forEach((q, index) => {
+        //        const li = document.createElement('li');
+        //        li.innerHTML = `
+        //            <a href="#" id="question-link-${index}" onclick="showQuestion(${index})">Câu ${index + 1}</a>
+        //        `;
+        //        questionList.appendChild(li);
+        //    });
+        //}
+
+        function loadQuestionList() {
+            const questionList = document.getElementById('question-list');
+            questionList.innerHTML = '';
+            quizData.forEach((q, index) => {
+                const li = document.createElement('li');
+                li.id = `question-li-${index}`;
+                li.innerHTML = `
+            <a href="#" id="question-link-${index}" onclick="showQuestion(${index})">Câu ${index + 1}</a>
+        `;
+                questionList.appendChild(li);
+            });
+            updateQuestionListDisplay();
+        }
+
+        // Function to display specific question and answers
+        function showQuestion(index) {
+            const currentQuestionDiv = document.getElementById('current-question');
+            const question = quizData[index];
+            currentQuestionDiv.innerHTML = `
+                <div class="question">
+                    <h2>Câu ${index + 1}: ${question.TENCAUHOI}</h2>
+                    <ul class="answer-list" style="list-style-type: none; padding: 0; font-size:25px">
+                        <li style="margin-bottom: 10px">
+                            <input type="radio" id="q${index + 1}a" name="question${index + 1}" value="a" style="width: 20px; height: 20px;" onclick="selectAnswer(${index}, 'A', '${question.DAPAN_A}')">
+                            <label for="q${index + 1}a">A. ${question.DAPAN_A}</label>
+                        </li>
+                        <li style="margin-bottom: 10px">
+                            <input type="radio" id="q${index + 1}b" name="question${index + 1}" value="b" style="width: 20px; height: 20px;" onclick="selectAnswer(${index}, 'B', '${question.DAPAN_B}')">
+                            <label for="q${index + 1}b">B. ${question.DAPAN_B}</label>
+                        </li>
+                        <li style="margin-bottom: 10px">
+                            <input type="radio" id="q${index + 1}c" name="question${index + 1}" value="c" style="width: 20px; height: 20px;" onclick="selectAnswer(${index}, 'C', '${question.DAPAN_C}')">
+                            <label for="q${index + 1}c">C. ${question.DAPAN_C}</label>
+                        </li>
+                        <li style="margin-bottom: 10px">
+                            <input type="radio" id="q${index + 1}d" name="question${index + 1}" value="d" style="width: 20px; height: 20px;" onclick="selectAnswer(${index}, 'D', '${question.DAPAN_D}')">
+                            <label for="q${index + 1}d">D. ${question.DAPAN_D}</label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="question-navigation">
+                    <button onclick="showPreviousQuestion(${index})">Câu trước</button>
+                    <button onclick="showNextQuestion(${index})">Câu sau</button>
+                    <button type="button" class="undecided-btn" onclick="markUndecided(${index})">Đang phân vân</button>
+                </div>
+            `;
+
+            // Check if user has selected an answer previously
+            if (userAnswers[index]) {
+                document.getElementById(`q${index + 1}${userAnswers[index].display.toLowerCase()}`).checked = true;
+            }
+        }
+
+        // CHUYỂN VỀ CÂU HỎI TRƯỚC
+        function showPreviousQuestion(currentIndex) {
+            if (currentIndex > 0) {
+                showQuestion(currentIndex - 1);
+            }
+            else {
+                showQuestion(currentIndex);
+            }
+        }
+        // CHUYỂN VỀ CÂU HỎI SAU
+        function showNextQuestion(currentIndex) {
+            if (currentIndex < quizData.length - 1) {
+                showQuestion(currentIndex + 1);
+            }
+            else {
+                showQuestion(currentIndex);
+            }
+        }
+        // Function to save user's answer and update question link text
+        //function selectAnswer(index, displayAnswer, realAnswer) {
+        //    userAnswers[index] = { display: displayAnswer, real: realAnswer };
+        //    const questionLink = document.getElementById(`question-link-${index}`);
+        //    questionLink.textContent = `Câu ${index + 1}: `;
+        //    let boldText = document.createElement('strong');
+        //    boldText.textContent = displayAnswer;
+        //    questionLink.appendChild(boldText);
+        //    questionLink.style.color = 'black';  // Reset color if previously marked as undecided
+        //}
+        function selectAnswer(index, displayAnswer, realAnswer) {
+            userAnswers[index] = { display: displayAnswer, real: realAnswer };
+            const questionLink = document.getElementById(`question-link-${index}`);
+            questionLink.textContent = `Câu ${index + 1}: `;
+            let boldText = document.createElement('strong');
+            boldText.textContent = displayAnswer;
+            questionLink.appendChild(boldText);
+
+            // Remove the undecided state if answer is selected
+            undecidedQuestions.delete(index);
+            updateQuestionLinkStyle(index);
+        }
+
+        // HÀM ĐÁNH DẤU CÁC CÂU ĐÃ CHỌN, ĐANG PHÂN VÂN
+        //function markUndecided(index) {
+        //    const questionLink = document.getElementById(`question-link-${index}`);
+        //    if (userAnswers[index]) {
+        //        if (questionLink.style.color === 'red') {
+        //            questionLink.style.color = 'black';  // Reset color to black if already marked as undecided
+        //        } else {
+        //            questionLink.style.color = 'red';  // Mark as undecided
+        //        }
+        //    }
+        //}
+        function markUndecided(index) {
+            const questionLink = document.getElementById(`question-link-${index}`);
+            if (undecidedQuestions.has(index)) {
+                undecidedQuestions.delete(index);
+            } else {
+                undecidedQuestions.add(index);
+            }
+            updateQuestionLinkStyle(index);
+        }
+        function updateQuestionLinkStyle(index) {
+            const questionLink = document.getElementById(`question-link-${index}`);
+            if (undecidedQuestions.has(index)) {
+                questionLink.style.color = 'red';
+            } else if (userAnswers[index]) {
+                questionLink.style.color = 'black';
+            } else {
+                questionLink.style.color = 'blue';
+            }
+        }
+
+        function filterQuestions(filter) {
+            quizData.forEach((q, index) => {
+                const li = document.getElementById(`question-li-${index}`);
+                if (filter === 'all') {
+                    li.style.display = '';
+                } else if (filter === 'not-selected') {
+                    li.style.display = userAnswers[index] ? 'none' : '';
+                } else if (filter === 'undecided') {
+                    li.style.display = undecidedQuestions.has(index) ? '' : 'none';
+                }
+            });
+        }
+
+        function updateQuestionListDisplay() {
+            quizData.forEach((q, index) => {
+                updateQuestionLinkStyle(index);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", loadQuestionList);
+
+
+        // Function to check if all questions have been answered
+        function checkAllQuestionsAnswered() {
+            for (let i = 0; i < quizData.length; i++) {
+                if (!userAnswers[i]) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        // Function to submit the quiz
+        function submitQuiz() {
+            if (!isHalfTimeElapsed) {
+                alert('Bạn chỉ có thể nộp bài sau khi đã qua 50% thời gian thi.');
+                return;
+            }
+
+            if (!checkAllQuestionsAnswered() && timeLeft >= 1) {
+                alert('Bạn còn câu hỏi chưa trả lời.');
+                return;
+            }
+
+            let score = 0;
+            const totalQuestions = quizData.length;
+            for (let i = 0; i < totalQuestions; i++) {
+                const correctAnswer = quizData[i].DAPANDUNG;
+                if (userAnswers[i] && userAnswers[i].real === correctAnswer) {
+                    score++;
+                }
+            }
+            const diemThi = (10.0 / totalQuestions) * score;
+            const mssv = '@Model.Student.MSSV';
+            const soCauDung = score;
+            const diemstring = diemThi.toString();
+            const formData = new FormData();
+            formData.append('mssv', mssv);
+            formData.append('soCauDung', soCauDung);
+            formData.append('diemThi', diemstring);
+
+            fetch('/Start/SaveResult', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Không thể nộp bài! Vui lòng thử lại sau..');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    alert('Bài thi của bạn đã được nộp! Điểm của bạn là: ' + diemThi);
+                    localStorage.removeItem('userAnswers');
+
+                    // Call logout function
+                    logout();
+
+                    // Redirect or perform any other action as needed
+                } else {
+                    throw new Error('Không thể nộp bài!');
+                }
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+        }
+        // Function to logout
+        function logout() {
+            fetch('/Start/Logout', {
+                method: 'POST'
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Đăng xuất không thành công!');
+                    }
+                    // Redirect to login page or perform any other action
+                    window.location.href = '/Login/Index'; // Example redirect to login page
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        }
+        // Function to load question list on page load
+        window.onload = loadQuestionList;
+
+        // Timer functionality
+        let timeLeft = initialTime;
+        const timerDisplay = document.getElementById('timer');
+        const timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            if (seconds < 10) {
+                seconds = '0' + seconds;
+            }
+            timerDisplay.textContent = `${minutes}:${seconds}`;
+
+            if (timeLeft <= initialTime / 2) {
+                isHalfTimeElapsed = true;
+            }
+
+            if (timeLeft === 0) {
+                clearInterval(timerInterval);
+                alert('Hết giờ! Bài thi của bạn đã được nộp.');
+                submitQuiz();
+            } else {
+                timeLeft--;
+            }
+        }, 1000);
+
+        ////////////////////Lưu câu trả lời vào Local Storage khi người dùng chọn câu trả lời:
+        function selectAnswer(index, displayAnswer, realAnswer) {
+            userAnswers[index] = { display: displayAnswer, real: realAnswer };
+            const questionLink = document.getElementById(`question-link-${index}`);
+            questionLink.textContent = `Câu ${index + 1}: `;
+            let boldText = document.createElement('strong');
+            boldText.textContent = displayAnswer;
+            questionLink.appendChild(boldText);
+
+            // Remove the undecided state if answer is selected
+            undecidedQuestions.delete(index);
+            updateQuestionLinkStyle(index);
+
+            // Save the answer to local storage
+            saveAnswersToLocalStorage();
+        }
+
+        function saveAnswersToLocalStorage() {
+            localStorage.setItem('userAnswers', JSON.stringify(userAnswers));
+        }
+        //////////////////////////////////////Tải lại câu trả lời từ Local Storage khi trang được tải lại:
+        function loadUserAnswersFromLocalStorage() {
+            const savedAnswers = localStorage.getItem('userAnswers');
+            if (savedAnswers) {
+                userAnswers = JSON.parse(savedAnswers);
+                quizData.forEach((q, index) => {
+                    if (userAnswers[index]) {
+                        const questionLink = document.getElementById(`question-link-${index}`);
+                        questionLink.textContent = `Câu ${index + 1}: `;
+                        let boldText = document.createElement('strong');
+                        boldText.textContent = userAnswers[index].display;
+                        questionLink.appendChild(boldText);
+                    }
+                });
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadQuestionList();
+            loadUserAnswersFromLocalStorage();
+        });
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+﻿@{
+    ViewBag.Title = "Backup";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutPage1.cshtml";
+}
+@section naviheader{
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/Admin/HomeAdmin" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="~/admin/HomeAdmin/Backup" class="nav-link">Sao lưu_phục hồi</a>
+        </li>
+    </ul>
+}
+
+<!-- Tiêu đề nội dung (Header của trang) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="~/Admin/HomeAdmin">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Sao lưu_phục hồi</li>
+                </ol>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+<div class="container mt-5">
+    <div class="row d-flex align-items-stretch">
+        <!-- Backup Section -->
+        <div class="col-md-6 mb-4 d-flex">
+            <div class="card shadow-sm w-100">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Sao lưu cơ sở dữ liệu</h4>
+                </div>
+                <div class="card-body text-center">
+                    <!-- Hiển thị đường dẫn và tên file mặc định -->
+                    <p><strong>Đường dẫn sao lưu mặc định:../Backups/</strong></p>
+                    <p><strong>Tên file mặc định:THITRACNGHIEM_ONL_Thời gian hiện tại</strong></p>
+                    <!-- Form sao lưu -->
+                    <form action="@Url.Action("BackupDatabase", "HomeAdmin")" method="post">
+                        <div class="form-group">
+                            <label for="backupFileName">Tên tệp sao lưu:</label>
+                            <input type="text" id="backupFileName" name="backupFileName" class="form-control" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Sao lưu cơ sở dữ liệu</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Restore Section -->
+        <div class="col-md-6 mb-4 d-flex">
+            <div class="card shadow-sm w-100">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Phục hồi cơ sở dữ liệu</h4>
+                </div>
+                <div class="card-body">
+                    @using (Html.BeginForm("RestoreDatabase", "HomeAdmin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            <label for="backupFile">Chọn tệp sao lưu:</label>
+                            <input type="file" id="backupFile" name="backupFile" class="form-control-file" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Phục hồi cơ sở dữ liệu</button>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJr74jEvi5TSjFoUpiENboIfl9UJ0ANhxTxJlKld1PEvFErp6" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+}

@@ -1,0 +1,124 @@
+﻿@model TracNghiem.Models.SINHVIEN
+@{
+    Layout = null;
+}
+@using System.Globalization
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Thông tin</title>
+    <link rel="stylesheet" href="~/css/info.css" />
+    <link rel="icon" href="~/img/Avata/hufi.jpg" type="image/x-icon" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-4">Thông tin thí sinh</h1>
+        @if (Model != null)
+        {
+            <form id="student-info-form" action="@Url.Action("Index", "Start")" method="post">
+                <div class="form-row">
+                    <!-- Hiển thị hình ảnh -->
+                    <div class="form-group col-md-3">
+                        @{
+                            // Xác định tên file ảnh của sinh viên
+                            var fileNamePNG = Model.MSSV + ".png";
+                            var fileNameJPG = Model.MSSV + ".jpg";
+                            // Xác định đường dẫn tới ảnh của sinh viên
+                            var imagePathPNG = $"~/img/Avata/{fileNamePNG}";
+                            var imagePathJPG = $"~/img/Avata/{fileNameJPG}";
+
+                            // Kiểm tra xem ảnh của sinh viên có tồn tại không
+                            var imageUrl = "";
+                            if (System.IO.File.Exists(Server.MapPath(imagePathPNG)))
+                            {
+                                imageUrl = imagePathPNG;
+                            }
+                            else if (System.IO.File.Exists(Server.MapPath(imagePathJPG)))
+                            {
+                                imageUrl = imagePathJPG;
+                            }
+                            else
+                            {
+                                imageUrl = "~/img/Avata/hufi.jpg"; // Nếu không có ảnh, sử dụng ảnh mặc định
+                            }
+                        }
+                        <img src="@Url.Content(imageUrl)" alt="Avatar" class="img-thumbnail" style="max-width: 150px;">
+                    </div>
+                    <!-- Thông tin sinh viên -->
+                    <div class="form-group col-md-9">
+                        <label style="padding-top:10px" for="name">Họ và Tên:</label>
+                        <input type="text" id="name" name="name" value="@Model.HOTEN" class="form-control" readonly>
+                        <label style="padding-top:10px" for="mso">MSSV:</label>
+                        <input type="text" id="mso" name="mso" value="@Model.MSSV" class="form-control" readonly>
+                        <label style="padding-top:10px" for="dob">Ngày sinh:</label>
+                        @{
+                            // Chuyển đổi định dạng ngày từ yyyy-MM-dd sang dd/MM/yyyy
+                            var ngaySinh = Model.NGAYSINH.ToString("dd/MM/yyyy");
+                        }
+                        <input type="text" id="dob" name="dob" value="@ngaySinh" class="form-control" readonly>
+                        @*<label for="exam-date">Ngày thi:</label>
+                            @{
+                                var ngayThi = DateTime.Today.ToString("dd/MM/yyyy");
+                            }*@
+                        @*<input type="text" id="exam-date" name="exam-date" value="@ngayThi" class="form-control" readonly>*@
+                        <label style="padding-top:10px" for="hocPhanId">Lịch Thi:</label>
+                        <select style="width: 605px; height: 33.5px;" id="hocPhanId" class="form-control" onchange="filterByHocPhan()">
+                            <option value="">-- Tất cả --</option>
+                            @if (ViewBag.LICHTHI != null)
+                            {
+                                var currentDate = DateTime.Today;
+                                //var currentTime = DateTime.Now.TimeOfDay;
+
+                                foreach (var hp in ViewBag.LICHTHI)
+                                {
+                                    // Parse thời gian thi từ chuỗi "7:00"
+                                    string examTimeStr = hp.THOIGIANTHI; // "7:00"
+                                    DateTime examTime = DateTime.ParseExact(examTimeStr, "HH:mm:ss", CultureInfo.InvariantCulture);
+
+                                    // Kiểm tra điều kiện và hiển thị option trong select
+                                    string durationStr = hp.THOILUONGTHI; // Thời lượng thi trong phút, thay bằng hp.THOILUONGTHI nếu lấy từ đối tượng hp
+                                    int durationMinutes = Convert.ToInt32(durationStr); // Chuyển đổi thời lượng thi thành số phút
+
+                                    // Tính thời điểm kết thúc thi
+                                    DateTime endTime = examTime.AddMinutes(durationMinutes);
+
+                                    if (hp.NGAYTHI.Date == currentDate && DateTime.Now >= examTime && DateTime.Now <= endTime)
+                                    {
+                                        <option value="@hp.PHONGTHI">Môn: @hp.TENHOCPHAN - Phòng: @hp.PHONGTHI - Ngày: @hp.NGAYTHI.ToString("dd/MM/yyyy") - Thời lượng: @hp.THOILUONGTHI phút</option>
+                                    }
+                                }
+                            }
+                        </select>
+
+                    </div>
+                </div>
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger" style="text-align:center;color:red">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+                <button type="button" class="btn btn-primary" onclick="submitForm()" style="display: block; width: 100%; padding: 10px; background-color: #28a745; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; text-align: center; margin-top: 20px;">Bắt đầu</button>
+            </form>
+        }
+    </div>
+</body>
+</html>
+<script>
+    function filterByHocPhan() {
+        var selectedValue = document.getElementById("hocPhanId").value;
+        // Thực hiện hành động khi người dùng chọn một học phần
+        console.log(selectedValue);
+        // Bạn có thể thêm mã để lọc kết quả hoặc gửi yêu cầu AJAX tới server
+    }
+
+    function submitForm() {
+        var selectedValue = document.getElementById("hocPhanId").value;
+        if (selectedValue === "") {
+            alert("Vui lòng chọn môn thi trước khi bắt đầu!");
+        } else {
+            document.getElementById("student-info-form").submit();
+        }
+    }
+</script>

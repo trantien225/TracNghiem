@@ -1,0 +1,90 @@
+﻿@model IEnumerable<TracNghiem.Models.Class2>
+@{
+    ViewBag.Title = "_QuestionList";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <style>
+        .modal-content {
+            width: 150%;
+        }
+        .print-button {
+            margin-bottom: 20px;
+        }
+        .no-print {
+            display: none !important;
+        }
+        .print-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 1px solid black;
+        }
+        .print-table th, .print-table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row mb-3 container-header">
+            <div class="col text-center">
+                <h2 class="mb-3">Danh Sách Câu Hỏi</h2>
+                <button class="btn btn-primary print-button" onclick="printDiv('printableArea')">
+                    <i class="fa fa-print"></i> In
+                </button>
+            </div>
+        </div>
+
+        @if (Model != null && Model.Any())
+        {
+            <div id="printableArea">
+                <table class="table table-bordered table-striped print-table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Tên câu hỏi</th>
+                            <th scope="col" style="width:86px">Đáp án A</th>
+                            <th scope="col" style="width:85px">Đáp án B</th>
+                            <th scope="col" style="width:85px">Đáp án C</th>
+                            <th scope="col" style="width:85px">Đáp án D</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.TENCAUHOI</td>
+                                <td>@item.DAPAN_A</td>
+                                <td>@item.DAPAN_B</td>
+                                <td>@item.DAPAN_C</td>
+                                <td>@item.DAPAN_D</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p>Không có câu hỏi nào.</p>
+        }
+    </div>
+    <script>
+        function printDiv(divId) {
+            var printContents = document.getElementById(divId).innerHTML;
+            var originalContents = document.body.innerHTML;
+
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+            location.reload(); // Reload page to reset the content
+        }
+    </script>
+</body>
+</html>
